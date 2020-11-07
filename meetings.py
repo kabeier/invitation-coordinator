@@ -88,7 +88,6 @@ class MeetingMaker():
             cls._attendees[country] = []
         for country, date in cls._best_date_dict.items():
             for people in cls._people:
-                
                 for i in range(len(people['dates'])):
                     if not isinstance(people['dates'][i], ddt):
                         people['dates'][i] = datetime.strptime(people['dates'][i], '%Y-%m-%d').date()
@@ -120,6 +119,7 @@ class MeetingMaker():
     def _display(cls):
         pprint(cls._meeting_dict_list)
 
+    @staticmethod
     def main():        
         MeetingMaker._make_json()
         MeetingMaker._find_countries()
