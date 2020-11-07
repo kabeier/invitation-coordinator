@@ -60,9 +60,6 @@ class MeetingMaker():
             cls._attendees[country] = []
         for country, date in cls._best_date_dict.items():
             for people in cls._people:
-                for i in range(len(people['dates'])):
-                    if not isinstance(people['dates'][i], ddt):
-                        people['dates'][i] = datetime.strptime(people['dates'][i], '%Y-%m-%d').date()
                 if date in people["dates"] and country in people["country"]:   
                     cls._attendees[country].append(people['email'])
 
