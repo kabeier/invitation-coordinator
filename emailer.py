@@ -5,14 +5,13 @@ from meetings import MeetingMaker
 #####Get email addresses and email content varibles
 
 port = 465  # For SSL
-password = "INSERT PASS WORD HERE" #####INSERT ACCOUNT PASSWORD HERE
+password = "INSERT_PASSWORD_HERE"  # INSERT ACCOUNT PASSWORD HERE
 smtp_server = "smtp.gmail.com"
 sender_email = "TestKitDummy25@gmail.com"
 dicts=MeetingMaker.return_dict()
 for adict in dicts:
     country = adict['name']
-    receiver_email = ', '.join(
-        [email for email in adict['attendees']])
+    receiver_email = ', '.join([email for email in adict['attendees']])
     date=adict['startDate']
     #####Send Emails
     message = MIMEMultipart("alternative")
@@ -50,3 +49,4 @@ for adict in dicts:
         server.sendmail(
             sender_email, receiver_email, message.as_string()
         )
+    print(f'sent email for {country} to {receiver_email}')

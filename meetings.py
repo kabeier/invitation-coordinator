@@ -16,7 +16,6 @@ class MeetingMaker():
     _attendees = {}
     _meeting_dict_list=[]
 
-
     @classmethod
     def _make_json(cls):
         cls._json=requests.get(cls._url).json()
@@ -38,49 +37,21 @@ class MeetingMaker():
         for country in cls._country_list:
             cls._avail_dates[country] = []
         for people in cls._people:
-            for dates in people['dates']:
-                dates = datetime.strptime(dates, '%Y-%m-%d').date()
-                cls._avail_dates[people['country']].append(dates)
+            for i in range(len(people['dates'])):
+                people['dates'][i] = datetime.strptime(people['dates'][i], '%Y-%m-%d').date()
+            for i in range(len(people['dates'])):
+                if people['dates'][i] + timedelta(days=1) in people['dates']:
+                    cls._avail_dates[people['country']].append(people['dates'][i])
 
     @classmethod
     def _find_best_dates(cls):
-        first=[]
-        second=[]
-        third=[]
-        
         for country, datelist in cls._avail_dates.items():
             ctr=collections.Counter(datelist)
             maxc=max(ctr.values())
-            bsd = []
+            bsd=[]
             for k, v in ctr.items():
                 if v == maxc:
-                    first.append(k)
-                if v == maxc-1:
-                    second.append(k)
-                if v == maxc-2:
-                    third.append(k)
-            for date in datelist:        
-                if date in first and date + timedelta(days=1) in first:
-                    bsd.append(date)
-                elif date in first and date - timedelta(days=1) in first:
-                    bsd.append(date)
-                elif date in first and date + timedelta(days=1) in second:
-                    bsd.append(date)
-                elif date in first and date - timedelta(days=1) in second:
-                    bsd.append(date)
-                elif date in second and date + timedelta(days=1) in second:
-                    bsd.append(date)
-                elif date in second and date - timedelta(days=1) in second:
-                    bsd.append(date)
-                elif date in first and date + timedelta(days=1) in third:
-                    bsd.append(date)
-                elif date in first and date - timedelta(days=1) in third:
-                    bsd.append(date)
-                elif date in second and date + timedelta(days=1) in third:
-                    bsd.append(date)
-                elif date in second and date - timedelta(days=1) in third:
-                    bsd.append(date)
-                
+                    bsd.append(k)
             cls._best_date_dict.update({country:bsd[0]})
             
     @classmethod
@@ -97,7 +68,6 @@ class MeetingMaker():
 
     @classmethod 
     def _make_meeting_dict_list(cls):
-        
         for country in cls._country_list:
             sd=''
             a=[]
@@ -109,7 +79,6 @@ class MeetingMaker():
                 if country == c:
                     a=ad
                     ct=len(a)
-            
             tempdict={
                 'attendeeCount' : ct,
                 'attendees' : a,
@@ -142,8 +111,6 @@ class MeetingMaker():
         MeetingMaker._find_attendees()
         MeetingMaker._make_meeting_dict_list()
         MeetingMaker._display()
-
-
 
 if __name__ == "__main__":
     MeetingMaker.main()
