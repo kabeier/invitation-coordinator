@@ -12,7 +12,7 @@ dicts=MeetingMaker.return_dict()
 for adict in dicts:
     country = adict['name']
     receiver_email = ', '.join(
-        [email for email in adict['attendees']])+", TestKitDummy25@gmail.com"
+        [email for email in adict['attendees']])+"
     date=adict['startDate']
     #####Send Emails
     message = MIMEMultipart("alternative")
