@@ -1,4 +1,5 @@
-#from command line just type python meeting.pyimport requests
+#from command line just type python meeting.py in your console to get information on the meetings be sure to have requests and all dependencies installed in your VE
+#to go ahead and send form emails to everyone run type python emailer.py in your console and be sure to have requests  and all dependencies installed in your VE
 import requests
 from pprint import pprint
 from datetime import datetime, timedelta
@@ -115,9 +116,21 @@ class MeetingMaker():
                 'startDate' : sd,
                 'name' : country}
             cls._meeting_dict_list.append(tempdict)
+
     @classmethod
     def _display(cls):
         pprint(cls._meeting_dict_list)
+        
+    @classmethod
+    def return_dict(cls):
+        MeetingMaker._make_json()
+        MeetingMaker._find_countries()
+        MeetingMaker._partner_info()
+        MeetingMaker._find_all_availible_dates_by_country()
+        MeetingMaker._find_best_dates()
+        MeetingMaker._find_attendees()
+        MeetingMaker._make_meeting_dict_list()
+        return(cls._meeting_dict_list)
 
     @staticmethod
     def main():        
@@ -131,26 +144,9 @@ class MeetingMaker():
         MeetingMaker._display()
 
 
+
 if __name__ == "__main__":
     MeetingMaker.main()
-
-
-        
-
-               
-
-        
-        
-       
-                                    
-                                
-                            
-                                
-                                
-
-
-
-
 
 
 
