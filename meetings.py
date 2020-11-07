@@ -99,7 +99,7 @@ class MeetingMaker():
         return(cls._meeting_dict_list)
 
     @staticmethod
-    def main():        
+    def _main():        
         MeetingMaker._make_json()
         MeetingMaker._find_countries()
         MeetingMaker._partner_info()
@@ -110,7 +110,7 @@ class MeetingMaker():
         MeetingMaker._display()
 
 if __name__ == "__main__":
-    MeetingMaker.main()
+    MeetingMaker._main()
 
 
 
