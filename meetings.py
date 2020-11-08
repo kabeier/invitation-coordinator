@@ -1,9 +1,15 @@
-#from command line just type python meeting.py in your console to get information on the meetings be sure to have requests and all dependencies installed in your VE
-#to go ahead and send form emails to everyone run type python emailer.py in your console and be sure to have requests  and all dependencies installed in your VE
+#######################################################################
+#######################################################################
+### To Print the Guest List Dictionary:                             ###
+###     @command line type:  python meetings.py                     ###
+### To Send Emails:                                                 ###
+###     add the -e or --email flag                                  ###
+###     @command line type:  python meetings.py -e                  ###
+#######################################################################
+#######################################################################
 import requests
 from pprint import pprint
 from datetime import datetime, timedelta
-from datetime import date as ddt
 import collections
 
 class MeetingMaker():
@@ -110,7 +116,15 @@ class MeetingMaker():
         MeetingMaker._display()
 
 if __name__ == "__main__":
-    MeetingMaker._main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-e", "--email", dest="sendEmail", help="This will send out the invitations", action='store_true')
+    args = parser.parse_args()
+
+    if args.sendEmail:
+        import emailer
+    else:
+        MeetingMaker._main()
 
 
 
